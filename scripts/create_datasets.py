@@ -43,7 +43,7 @@ URLS = {
 def _encode_png(images):
     raw = []
     with tf.Session() as sess, tf.device('cpu:0'):
-        image_x = tf.placeholder(tf.uint8, [None, None, None], 'image_x')
+        image_x = tf.placeholder(tf.uint8, images.shape[1:], 'image_x')
         to_png = tf.image.encode_png(image_x)
         for x in trange(images.shape[0], desc='PNG Encoding', leave=False):
             raw.append(sess.run(to_png, feed_dict={image_x: images[x]}))
