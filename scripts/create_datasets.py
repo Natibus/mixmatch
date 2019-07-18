@@ -50,6 +50,28 @@ def _encode_png(images):
     return raw
 
 
+def _load_mnist(size=1000):
+    splits = collections.OrderedDict()
+    (x_train, y_train), (x_test, y_test) = tf.keras.datasets.mnist.load_data()
+
+    # reshape images for tensorflow channels format
+    h, w = x_train[0].shape
+    x_train = x_train.reshape((-1, h, w, 1))
+    x_test = x_test.reshape((-1, h, w, 1))
+    indexes = np.random.permutation(size)
+
+    splits["train"] = {
+        "images": _encode_png(x_train[indexes]),
+        "labels": y_train[indexes]
+    }
+    splits["test"] = {
+        "images": _encode_png(x_test[indexes]),
+        "labels": y_test[indexes]
+    }
+
+    return splits
+
+
 def _load_svhn():
     splits = collections.OrderedDict()
     for split in ['train', 'test', 'extra']:
@@ -198,6 +220,8 @@ CONFIGS = dict(
     svhn=dict(loader=_load_svhn,
               checksums=dict(train=None, test=None, extra=None)),
     stl10=dict(loader=_load_stl10,
+               checksums=dict(train=None, test=None)),
+    mnist=dict(loader=_load_mnist,
                checksums=dict(train=None, test=None)),
 )
 
