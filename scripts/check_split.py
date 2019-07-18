@@ -48,6 +48,9 @@ DATASETS.update([data.DataSet.creator('svhn', seed, label, valid, lambda x: x, d
 DATASETS.update([data.DataSet.creator('svhn_noextra', seed, label, valid, lambda x: x, do_memoize=False)
                  for seed, label, valid in
                  itertools.product(range(6), [250, 500, 1000, 2000, 4000], [1, 5000])])
+DATASETS.update([data.DataSet.creator('mnist', seed, label, valid, lambda x: x)
+                 for seed, label, valid in
+                 itertools.product(range(6), [250, 500], [1])])
 
 
 def to_byte(d: dict):
