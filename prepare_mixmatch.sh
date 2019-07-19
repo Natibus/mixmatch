@@ -3,7 +3,7 @@ export PYTHONPATH=$PYTHONPATH:.
 export ML_DATA="Data"
 # Download datasets
 CUDA_VISIBLE_DEVICES= ./scripts/create_datasets.py mnist
-cp $ML_DATA/svhn-test.tfrecord $ML_DATA/svhn_noextra-test.tfrecord
+#cp $ML_DATA/svhn-test.tfrecord $ML_DATA/svhn_noextra-test.tfrecord
 
 # Create semi-supervised subsets
  for seed in 1 2 3 4 5; do
