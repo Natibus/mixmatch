@@ -42,6 +42,7 @@ URLS = {
 }
 
 flags.DEFINE_integer('nb_samples', -1, 'Size of training set.')
+flags.DEFINE_string('dataset_name', 'all', 'name of dataset to import.')
 
 FLAGS = flags.FLAGS
 
@@ -244,8 +245,8 @@ CONFIGS = dict(
 
 def main(argv):
     del argv
-    if FLAGS.dataset != 'all':
-        subset = set([FLAGS.dataset])
+    if FLAGS.dataset_name != 'all':
+        subset = set([FLAGS.dataset_name])
     else:
         subset = set(CONFIGS.keys())
     try:

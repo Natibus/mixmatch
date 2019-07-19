@@ -14,9 +14,9 @@ export PYTHONPATH=${PYTHONPATH}:.
 export ML_DATA='Data'
 
 if [[ -z "$NB_SAMPLES" ]] ; then
-    CUDA_VISIBLE_DEVICES= ./scripts/create_datasets.py --dataset=${DATA_SET}
+    CUDA_VISIBLE_DEVICES= ./scripts/create_datasets.py --dataset_name=${DATA_SET}
 else
-    CUDA_VISIBLE_DEVICES= ./scripts/create_datasets.py --dataset=${DATA_SET} --nb_samples=${NB_SAMPLES}
+    CUDA_VISIBLE_DEVICES= ./scripts/create_datasets.py --dataset_name=${DATA_SET} --nb_samples=${NB_SAMPLES}
 fi
 
 # Download datasets
