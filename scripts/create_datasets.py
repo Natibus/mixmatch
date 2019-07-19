@@ -31,6 +31,8 @@ import numpy as np
 import scipy.io
 import tensorflow as tf
 from tqdm import trange
+from absl import flags
+from absl import app
 
 URLS = {
     'svhn': 'http://ufldl.stanford.edu/housenumbers/{}_32x32.mat',
@@ -39,18 +41,22 @@ URLS = {
     'stl10': 'http://ai.stanford.edu/~acoates/stl10/stl10_binary.tar.gz',
 }
 
+flags.DEFINE_integer('nb_samples', -1, 'Size of training set.')
+
+FLAGS = flags.FLAGS
+
 
 def _encode_png(images):
     raw = []
     with tf.Session() as sess, tf.device('cpu:0'):
-        image_x = tf.placeholder(tf.uint8, images.shape[1:], 'image_x')
+        image_x = tf.placeholder(tf.uint8, [None, None, None], 'image_x')
         to_png = tf.image.encode_png(image_x)
         for x in trange(images.shape[0], desc='PNG Encoding', leave=False):
             raw.append(sess.run(to_png, feed_dict={image_x: images[x]}))
     return raw
 
 
-def _load_mnist(size=1000):
+def _load_mnist():
     splits = collections.OrderedDict()
     (x_train, y_train), (x_test, y_test) = tf.keras.datasets.mnist.load_data()
 
@@ -58,15 +64,25 @@ def _load_mnist(size=1000):
     h, w = x_train[0].shape
     x_train = x_train.reshape((-1, h, w, 1))
     x_test = x_test.reshape((-1, h, w, 1))
-    indexes = np.random.permutation(size)
+
+    print("nb samples :", FLAGS.nb_samples)
+    if FLAGS.nb_samples == -1:
+        size_train = x_train.shape[0]
+        size_test = x_test.shape[0]
+    else:
+        size_train = FLAGS.nb_samples
+        size_test = FLAGS.nb_samples
+
+    indexes_train = np.random.permutation(size_train)
+    indexes_test = np.random.permutation(size_test)
 
     splits["train"] = {
-        "images": _encode_png(x_train[indexes]),
-        "labels": y_train[indexes]
+        "images": _encode_png(x_train[indexes_train]),
+        "labels": y_train[indexes_train]
     }
     splits["test"] = {
-        "images": _encode_png(x_test[indexes]),
-        "labels": y_test[indexes]
+        "images": _encode_png(x_test[indexes_test]),
+        "labels": y_test[indexes_test]
     }
 
     return splits
@@ -225,9 +241,11 @@ CONFIGS = dict(
                checksums=dict(train=None, test=None)),
 )
 
-if __name__ == '__main__':
-    if len(sys.argv[1:]):
-        subset = set(sys.argv[1:])
+
+def main(argv):
+    del argv
+    if FLAGS.dataset != 'all':
+        subset = set([FLAGS.dataset])
     else:
         subset = set(CONFIGS.keys())
     try:
@@ -258,3 +276,7 @@ if __name__ == '__main__':
                     open(path, "wb").write(file_and_data.data)
             else:
                 saver(data, '%s-%s' % (name, sub_name))
+
+
+if __name__ == '__main__':
+    app.run(main)
