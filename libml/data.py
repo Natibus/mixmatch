@@ -198,6 +198,6 @@ DATASETS.update([DataSet.creator('svhn', seed, label, valid, augment_svhn, do_me
 DATASETS.update([DataSet.creator('svhn_noextra', seed, label, valid, augment_svhn, do_memoize=False)
                  for seed, label, valid in
                  itertools.product(range(6), [250, 500, 1000, 2000, 4000, 8000], [1, 5000])])
-DATASETS.update([DataSet.creator('mnist', seed, label, valid, lambda x: x, height=28, width=28, colors=1)
+DATASETS.update([DataSet.creator('mnist', seed, label, valid, augment_cifar10, height=28, width=28, colors=1)
                  for seed, label, valid in
                  itertools.product(range(6), [250, 500], [1])])
