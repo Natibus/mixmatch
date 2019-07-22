@@ -25,7 +25,7 @@ fi
 # Create semi-supervised subsets
 # for seed in 1 2 3 4 5; do
 #      for size in 250 500 1000 2000 4000; do
- for size in 250 500; do
+ for size in 100 250 500 1000 3000; do
 #         CUDA_VISIBLE_DEVICES= scripts/create_split.py --seed=$seed --size=$size $ML_DATA/SSL/svhn $ML_DATA/svhn-train.tfrecord $ML_DATA/svhn-extra.tfrecord &
 #         CUDA_VISIBLE_DEVICES= scripts/create_split.py --seed=$seed --size=$size $ML_DATA/SSL/svhn_noextra $ML_DATA/svhn-train.tfrecord &
 #         CUDA_VISIBLE_DEVICES= scripts/create_split.py --seed=$seed --size=$size $ML_DATA/SSL/cifar10 $ML_DATA/cifar10-train.tfrecord &

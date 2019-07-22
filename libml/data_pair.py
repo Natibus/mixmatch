@@ -55,4 +55,4 @@ DATASETS.update([DataSet.creator('svhn_noextra', seed, label, valid, [augment_sv
 DATASETS.update([DataSet.creator('mnist', seed, label, valid,  [augment_cifar10, stack_augment(augment_cifar10)],
                                  height=28, width=28, colors=1)
                  for seed, label, valid in
-                 itertools.product(range(6), [250, 500], [1])])
+                 itertools.product(range(6), [100, 250, 500, 1000, 3000], [1, 1000])])
