@@ -246,12 +246,13 @@ class ClassifySemi(Model):
                 predicted.append(p)
             predicted = np.concatenate(predicted, axis=0)
 
-            cm = str(confusion_matrix(labels, predicted.argmax(1)).tolist())
+            cm = confusion_matrix(labels, predicted.argmax(1)).tolist()
             accuracies.append((predicted.argmax(1) == labels).mean() * 100)
 
         self.train_print('kimg %-5d  accuracy train/valid/test  %.2f  %.2f  %.2f' %
                          tuple([self.tmp.step >> 10] + accuracies))
-        self.train_print(cm)
+        with open(os.path.join(FLAGS.experiments, 'cm_%-5d' % self.tmp.step >> 10), 'w+') as f:
+            f.write('\n'.join([str(vector) for vector in cm]))
         return np.array(accuracies, 'f')
 
     def add_summaries(self, feed_extra=None, **kwargs):
