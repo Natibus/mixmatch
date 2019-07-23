@@ -251,7 +251,7 @@ class ClassifySemi(Model):
 
         self.train_print('kimg %-5d  accuracy train/valid/test  %.2f  %.2f  %.2f' %
                          tuple([self.tmp.step >> 10] + accuracies))
-        with open(os.path.join(FLAGS.experiments, 'cm_%-5d' % self.tmp.step >> 10), 'w+') as f:
+        with open(os.path.join(FLAGS.train_dir, 'cm_%-5d' % self.tmp.step >> 10), 'w+') as f:
             f.write('\n'.join([str(vector) for vector in cm]))
         return np.array(accuracies, 'f')
 
