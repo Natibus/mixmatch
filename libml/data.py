@@ -200,4 +200,4 @@ DATASETS.update([DataSet.creator('svhn_noextra', seed, label, valid, augment_svh
                  itertools.product(range(6), [250, 500, 1000, 2000, 4000, 8000], [1, 5000])])
 DATASETS.update([DataSet.creator('mnist', seed, label, valid, augment_cifar10, height=28, width=28, colors=1)
                  for seed, label, valid in
-                 itertools.product(range(6), [100, 250, 500, 1000, 3000], [1, 1000])])
+                 itertools.product(range(6), [10, 50, 100, 250, 500, 1000, 3000], [1, 100, 1000])])

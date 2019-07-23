@@ -50,7 +50,7 @@ DATASETS.update([data.DataSet.creator('svhn_noextra', seed, label, valid, lambda
                  itertools.product(range(6), [250, 500, 1000, 2000, 4000], [1, 5000])])
 DATASETS.update([data.DataSet.creator('mnist', seed, label, valid, lambda x: x)
                  for seed, label, valid in
-                 itertools.product(range(6), [100, 250, 500, 1000, 3000], [1, 1000])])
+                 itertools.product(range(6), [10, 50, 100, 250, 500, 1000, 3000], [1, 100, 1000])])
 
 
 def to_byte(d: dict):

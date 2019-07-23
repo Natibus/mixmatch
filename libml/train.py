@@ -162,9 +162,12 @@ class ClassifySemi(Model):
             self.session = train_session._tf_sess()
             self.tmp.step = self.session.run(self.step)
             while self.tmp.step < train_nimg:
-                loop = trange(self.tmp.step % report_nimg, report_nimg, batch,
-                              leave=False, unit='img', unit_scale=batch,
-                              desc='Epoch %d/%d(tmpstep : %d, report_nimg : %d)' % (1 + (self.tmp.step // report_nimg), train_nimg // report_nimg, self.tmp.step, report_nimg))
+                loop = trange(
+                    self.tmp.step % report_nimg, report_nimg, batch,
+                    leave=False, unit='img', unit_scale=batch,
+    # desc='Epoch %d/%d(tmpstep : %d, report_nimg : %d)' % (1 + (self.tmp.step // report_nimg), train_nimg // report_nimg, self.tmp.step, report_nimg),
+                    desc='Epoch %d/%d' % (1 + (self.tmp.step // report_nimg), train_nimg // report_nimg)
+                )
                 for _ in loop:
                     self.train_step(train_session, train_labeled, train_unlabeled)
                     while self.tmp.print_queue:
