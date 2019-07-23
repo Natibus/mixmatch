@@ -246,7 +246,7 @@ class ClassifySemi(Model):
                 predicted.append(p)
             predicted = np.concatenate(predicted, axis=0)
 
-            cm = confusion_matrix(labels, predicted.argmax(1))
+            cm = str(confusion_matrix(labels, predicted.argmax(1)).tolist())
             accuracies.append((predicted.argmax(1) == labels).mean() * 100)
 
         self.train_print('kimg %-5d  accuracy train/valid/test  %.2f  %.2f  %.2f' %
