@@ -32,7 +32,9 @@ else
 fi
 
 # Create semi-supervised subsets ( you can use different seeds like in the readme )
- for size in 10 50 100 250 500 1000 4000; do
-    CUDA_VISIBLE_DEVICES= scripts/create_split.py --seed=3 --size=${size} ${ML_DATA}/SSL/${DATA_SET} ${ML_DATA}/${DATA_SET}-train.tfrecord
-    wait
+for seed in 1 2 3; do
+    for size in 10 50 100 250 500 1000 4000; do
+        CUDA_VISIBLE_DEVICES= scripts/create_split.py --seed=${seed} --size=${size} ${ML_DATA}/SSL/${DATA_SET} ${ML_DATA}/${DATA_SET}-train.tfrecord
+        wait
+    done
 done

@@ -22,6 +22,7 @@ import tensorflow as tf
 from absl import flags
 from easydict import EasyDict
 from tqdm import trange
+from sklearn.metrics import confusion_matrix
 
 from libml import data, utils
 
@@ -244,9 +245,13 @@ class ClassifySemi(Model):
                     })
                 predicted.append(p)
             predicted = np.concatenate(predicted, axis=0)
+
+            cm = confusion_matrix(labels, predicted)
             accuracies.append((predicted.argmax(1) == labels).mean() * 100)
+
         self.train_print('kimg %-5d  accuracy train/valid/test  %.2f  %.2f  %.2f' %
                          tuple([self.tmp.step >> 10] + accuracies))
+        self.train_print(cm)
         return np.array(accuracies, 'f')
 
     def add_summaries(self, feed_extra=None, **kwargs):

@@ -129,6 +129,7 @@ def main(argv):
         filters=FLAGS.filters,
         repeat=FLAGS.repeat)
     model.train(FLAGS.train_kimg << 10, FLAGS.report_kimg << 10)
+    # print(model.eval_mode())
 
 
 if __name__ == '__main__':
