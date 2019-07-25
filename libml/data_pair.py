@@ -55,3 +55,7 @@ DATASETS.update([DataSet.creator('mnist', seed, label, valid,  [augment_cifar10,
                                  height=28, width=28, colors=1)
                  for seed, label, valid in
                  itertools.product(range(6), [10, 50, 100, 250, 500, 1000, 3000], [1, 100, 1000])])
+DATASETS.update([DataSet.creator('owkin', seed, label, valid,  [augment_cifar10, stack_augment(augment_cifar10)],
+                                 height=224, width=224, colors=3)
+                 for seed, label, valid in
+                 itertools.product(range(6), [10, 50, 100, 250, 500, 1000, 3000], [1, 100, 1000])])

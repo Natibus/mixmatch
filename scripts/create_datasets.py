@@ -34,6 +34,8 @@ from tqdm import trange
 from absl import flags
 from absl import app
 
+from scripts.create_owkin import get_from_disk
+
 URLS = {
     'svhn': 'http://ufldl.stanford.edu/housenumbers/{}_32x32.mat',
     'cifar10': 'https://www.cs.toronto.edu/~kriz/cifar-10-matlab.tar.gz',
@@ -87,6 +89,18 @@ def _load_mnist():
     }
 
     return splits
+
+
+def _load_owkin():
+    data = get_from_disk()
+    sample_size = FLAGS.nb_samples
+    for key in data.keys():
+        if sample_size < data[key]['images'].size:
+            data[key]['images'] = _encode_png(data[key]['images'][:sample_size])
+            data[key]['labels'] = data[key]['labels'][:sample_size]
+        else:
+            data[key]['images'] = _encode_png(data[key]['images'])
+    return data
 
 
 def _load_svhn():
@@ -239,6 +253,8 @@ CONFIGS = dict(
     stl10=dict(loader=_load_stl10,
                checksums=dict(train=None, test=None)),
     mnist=dict(loader=_load_mnist,
+               checksums=dict(train=None, test=None)),
+    owkin=dict(loader=_load_owkin,
                checksums=dict(train=None, test=None)),
 )
 

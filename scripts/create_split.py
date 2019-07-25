@@ -78,6 +78,8 @@ def main(argv):
         train_stats[:] += 1
 
     print('  Stats', ' '.join(['%.2f' % (100 * x) for x in train_stats]))
+
+    print(class_id.keys())
     assert min(class_id.keys()) == 0 and max(class_id.keys()) == (nclass - 1)
     class_id = [np.array(class_id[i], dtype=np.int64) for i in range(nclass)]
     if FLAGS.seed:
