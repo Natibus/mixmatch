@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 # Create semi-supervised subsets ( you can use different seeds like in the readme )
 
+# The code below is based on mixmatch's README
+export PYTHONPATH=${PYTHONPATH}:.
+export ML_DATA='Data'
+
 #for seed in 1 2 3; do
 for size in 10 50 100 250 500 1000 4000; do
     if [ -f $ML_DATA/${DATA_SET}-unlabeled.tfrecord ]; then
